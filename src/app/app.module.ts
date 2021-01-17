@@ -1,24 +1,26 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { PreciosComponent } from './components/precios/precios.component';
-import { ProtegidaComponent } from './components/protegida/protegida.component';
 import { HomeComponent } from './components/home/home.component';
 import { NavbarComponent } from './components/shared/navbar/navbar.component';
+import { ReactiveComponent } from './pages/reactive/reactive.component';
+import { TemplateComponent } from './pages/template/template.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    PreciosComponent,
-    ProtegidaComponent,
     HomeComponent,
-    NavbarComponent
+    NavbarComponent,
+    ReactiveComponent,
+    TemplateComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

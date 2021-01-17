@@ -1,0 +1,29 @@
+<h4>Tipo: <small>Template</small></h4>
+<hr>
+<form (ngSubmit)="guardar(data_form)" #data_form="ngForm" autocomplete="off">
+    <div class="mb-3">
+        <label for="name-frm" class="form-label">Nombres</label>
+        <input type="text" class="form-control" id="name-frm" name="name" aria-describedby="nameFeedback" [ngModel]="user.name" required minlength="3" #nombre="ngModel" [class.is-invalid]="nombre.invalid && nombre.touched">
+        <div id="nameFeedback" class="invalid-feedback">
+            Este campo es requerido y debe contar con mínimo 3 caracteres
+        </div>
+    </div>
+    <div class="mb-3">
+        <label for="lastName-frm" class="form-label">Apellidos</label>
+        <input type="text" class="form-control" id="lastName-frm" name="lastName" aria-describedby="lastNameFeedback" [ngModel]="user.lastName" required minlength="3" #lastName="ngModel" [class.is-invalid]="lastName.invalid && lastName.touched">
+        <div id="lastNameFeedback" class="invalid-feedback">
+            Este campo es requerido y debe contar con mínimo 3 caracteres
+        </div>
+    </div>
+    <div class="mb-3">
+        <label for="email-frm" class="form-label">Correo</label>
+        <input type="email" class="form-control" name="email" id="email-frm" aria-describedby="emailFeedback" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" [ngModel]="user.email" required #email="ngModel" [class.is-invalid]="email.invalid && email.touched">
+        <div id="emailHelp" class="form-text">Nunca venderemos tu información</div>
+        <div id="emailFeedback" class="invalid-feedback">
+            La estructura del correo electrónico es incorrecta
+        </div>
+    </div>
+    <div class="d-grid gap-2">
+        <button type="submit" class="btn btn-outline-primary btn-block">Guardar</button>
+    </div>
+</form>
