@@ -41,7 +41,7 @@ export class ReactiveComponent implements OnInit {
         address: ['', [Validators.required, Validators.minLength(3)]],
         city: ['', [Validators.required, Validators.minLength(3)]]
       })
-    })
+    });
   }
 
   guardar(){
@@ -49,8 +49,25 @@ export class ReactiveComponent implements OnInit {
     if(this.form.invalid) {
       Object.values(this.form.controls).forEach(control => {
         control.markAllAsTouched();
-      })
+      });
     }
+
+    this.form.reset();
+  }
+
+  fillForm() {
+    console.log('Cargando...');
+    this.form.setValue({
+      name: 'Mauricio',
+      lastName: 'Montoya Medrano',
+      email: 'mauricio.montoya@bitcubico.com',
+      sex: 'M',
+      countryOfBirth: 'COL',
+      direction: {
+        address: 'Calle 42 #63B-34 apt. 201, Barrio Conquistadores',
+        city: 'Medellín'
+      }
+    });
   }
 
   formValidation(controlName: string) {
