@@ -13,6 +13,7 @@ export class TemplateComponent implements OnInit {
     name: '',
     lastName: '',
     email: '',
+    sex: 'M',
     countryOfBirth: ''
   };
 
@@ -36,6 +37,13 @@ export class TemplateComponent implements OnInit {
 
   guardar(data: NgForm){
     console.log(data);
+
+    if(data.invalid) {
+      Object.values(data.controls).forEach(control => {
+        control.markAllAsTouched();
+      })
+    }
+
     console.log(data.value);
   }
 }
@@ -44,6 +52,7 @@ interface Usuario {
   name: string,
   lastName: string,
   email: string,
+  sex?: string,
   countryOfBirth?: string
 }
 

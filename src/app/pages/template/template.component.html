@@ -26,14 +26,30 @@
     <div class="mb-3">
         <label for="pais-nacimiento-frm" class="form-label">País de nacimiento</label>
         <select class="form-select" id="pais-nacimiento-frm" name="countryOfBirth" required aria-describedby="countryOfBirthFeedback" [ngModel]="user.countryOfBirth" required #countryOfBirth="ngModel" [class.is-invalid]="countryOfBirth.invalid && countryOfBirth.touched"
-            [disabled]="paises.length === 0">
+            [disabled]="paises === undefined || paises.length === 0">
             <option *ngFor="let pais of paises" [value]="pais.code">{{ pais.name }}</option>
         </select>
         <div id="countryOfBirthFeedback" class="invalid-feedback">
             Por favor indiquenos el país donde usted nació
         </div>
     </div>
-    <div class="d-grid gap-2">
-        <button type="submit" class="btn btn-outline-primary btn-block">Guardar</button>
+    <div class="mb-3">
+        <label class="form-label">Género</label>
+        <div class="form-check">
+            <input type="radio" class="form-check-input" id="masculino-frm" name="sexo" [ngModel]="user.sex" value="M" required #sexo="ngModel" [class.is-invalid]="sexo.invalid && sexo.touched">
+            <label class=" form-check-label " for="masculino-frm">Masculino</label>
+        </div>
+        <div class="form-check">
+            <input type="radio" class="form-check-input" id="femenino-frm" name="sexo" [ngModel]="user.sex" value="F" required #sexo="ngModel" [class.is-invalid]="sexo.invalid && sexo.touched">
+            <label class=" form-check-label " for="femenino-frm">Femenino</label>
+        </div>
+        <div class="form-check">
+            <input type="radio" class="form-check-input" id="otro-sexo-frm" name="sexo" [ngModel]="user.sex" value="O" required #sexo="ngModel" [class.is-invalid]="sexo.invalid && sexo.touched">
+            <label class=" form-check-label " for="otro-sexo-frm">Otro</label>
+            <div class="invalid-feedback">Por favor seleccione el genero al cual usted pertenece</div>
+        </div>
+    </div>
+    <div class="d-grid gap-2 ">
+        <button type="submit " class="btn btn-outline-primary btn-block ">Guardar</button>
     </div>
 </form>
