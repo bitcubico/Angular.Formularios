@@ -8,7 +8,7 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'template', component: TemplateComponent },
   { path: 'reactivo', component: ReactiveComponent },
-  { path: '**', pathMatch: 'full', redirectTo: 'template' }
+  { path: '**', pathMatch: 'full', redirectTo: 'reactivo' }
 ];
 
 @NgModule({

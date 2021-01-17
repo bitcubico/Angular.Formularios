@@ -1,20 +1,79 @@
 <h4>Tipo: <small>Reactivo</small></h4>
 <hr>
-<form autocomplete="off">
+<form [formGroup]="form" (ngSubmit)="guardar()" autocomplete="off">
     <div class="mb-3">
         <label for="name-frm" class="form-label">Nombres</label>
-        <input type="text" class="form-control" id="name-frm" name="name">
+        <input type="text" class="form-control" id="name-frm" formControlName="name" aria-describedby="nameFeedback" [class.is-invalid]="formValidation('name')">
+        <div id="nameFeedback" class="invalid-feedback">
+            Este campo es requerido y debe contar con mínimo 3 caracteres
+        </div>
     </div>
     <div class="mb-3">
         <label for="lastName-frm" class="form-label">Apellidos</label>
-        <input type="text" class="form-control" id="lastName-frm" name="lastName">
+        <input type="text" class="form-control" id="lastName-frm" formControlName="lastName" aria-describedby="lastNameFeedback" [class.is-invalid]="formValidation('lastName')">
+        <div id="lastNameFeedback" class="invalid-feedback">
+            Este campo es requerido y debe contar con mínimo 3 caracteres
+        </div>
     </div>
     <div class="mb-3">
         <label for="email-frm" class="form-label">Correo</label>
-        <input type="email" class="form-control" id="email-frm" aria-describedby="emailHelp">
+        <input type="email" class="form-control" formControlName="email" id="email-frm" aria-describedby="emailFeedback" [class.is-invalid]="formValidation('email')">
         <div id="emailHelp" class="form-text">Nunca venderemos tu información</div>
+        <div id="emailFeedback" class="invalid-feedback">
+            La estructura del correo electrónico es incorrecta
+        </div>
     </div>
-    <div class="d-grid gap-2">
-        <button type="submit" class="btn btn-outline-primary btn-block">Guardar</button>
+    <div class="mb-3">
+        <label for="pais-nacimiento-frm" class="form-label">País de nacimiento</label>
+        <select class="form-select" id="pais-nacimiento-frm" formControlName="countryOfBirth" aria-describedby="countryOfBirthFeedback" [class.is-invalid]="formValidation('countryOfBirth')">
+            <option *ngFor="let pais of paises" [value]="pais.code">{{ pais.name }}</option>
+        </select>
+        <div id="countryOfBirthFeedback" class="invalid-feedback">
+            Por favor indiquenos el país donde usted nació
+        </div>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Género</label>
+        <div class="form-check">
+            <input type="radio" class="form-check-input" id="masculino-frm" value='M' formControlName="sex" [class.is-invalid]="formValidation('sex')">
+            <label class=" form-check-label " for="masculino-frm">Masculino</label>
+        </div>
+        <div class="form-check">
+            <input type="radio" class="form-check-input" id="femenino-frm" value='F' formControlName="sex" [class.is-invalid]="formValidation('sex')">
+            <label class=" form-check-label " for="femenino-frm">Femenino</label>
+        </div>
+        <div class="form-check">
+            <input type="radio" class="form-check-input" id="otro-sexo-frm" value='O' formControlName="sex" [class.is-invalid]="formValidation('sex')">
+            <label class=" form-check-label " for="otro-sexo-frm">Otro</label>
+            <div class="invalid-feedback">Por favor seleccione el genero al cual usted pertenece</div>
+        </div>
+    </div>
+    <div class="row g-2 mb-3" formGroupName="direction">
+        <div class="col-md-8">
+            <label for="address-frm" class="form-label">Dirección</label>
+            <input type="text" class="form-control" id="address-frm" formControlName="address" aria-describedby="addressFeedback" [class.is-invalid]="formValidation('direction.address')">
+            <div id="addressFeedback" class="invalid-feedback">
+                Este campo es requerido y debe contar con mínimo 3 caracteres
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label for="city-frm" class="form-label">Ciudad</label>
+            <input type="text" class="form-control" id="city-frm" formControlName="city" aria-describedby="cityFeedback" [class.is-invalid]="formValidation('direction.city')">
+            <div id="cityFeedback" class="invalid-feedback">
+                Este campo es requerido y debe contar con mínimo 3 caracteres
+            </div>
+        </div>
+    </div>
+    <div class="d-grid gap-2 ">
+        <button type="submit " class="btn btn-outline-primary btn-block ">Guardar</button>
     </div>
 </form>
+
+<hr>
+<pre>
+Formulario válido: {{ !form.invalid }}
+Estado del formulario: {{ form.status }}
+</pre>
+<pre>
+{{ form.value | json }}
+</pre>
