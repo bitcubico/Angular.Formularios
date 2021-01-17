@@ -18,7 +18,7 @@ export class PaisesService {
             .pipe( 
               map((data: any[]) => {
                 console.log(data);
-                return data.map(pais => ({nombre: pais.name, codigo: pais.alpha3Code}));
+                return data.map(pais => ({name: pais.name, code: pais.alpha3Code}));
               }), 
               catchError((error) => {
                 throw(error.error)

@@ -8,10 +8,12 @@ import { PaisesService } from '../../services/paises.service';
 })
 export class TemplateComponent implements OnInit {
 
+  paises: Pais[];
   user: Usuario = {
     name: '',
     lastName: '',
-    email: ''
+    email: '',
+    countryOfBirth: ''
   };
 
   constructor(private _paisesService: PaisesService) { }
@@ -19,7 +21,14 @@ export class TemplateComponent implements OnInit {
   ngOnInit(): void {
     this._paisesService.getSpanishCountries()
       .subscribe((data:any) => {
-        console.log(data);
+        this.paises = data;
+        console.log(this.paises);
+
+        // Agrego al inicio de la lista la opción para que seleccione un país
+        this.paises.unshift({
+          name: 'Seleccione un país...',
+          code: ''
+        })
       }, (service_error) => {
         console.error(service_error.error.message);
       });
@@ -34,5 +43,11 @@ export class TemplateComponent implements OnInit {
 interface Usuario {
   name: string,
   lastName: string,
-  email: string
+  email: string,
+  countryOfBirth?: string
+}
+
+interface Pais {
+  name: string,
+  code: string
 }

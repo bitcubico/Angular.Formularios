@@ -23,6 +23,16 @@
             La estructura del correo electrónico es incorrecta
         </div>
     </div>
+    <div class="mb-3">
+        <label for="pais-nacimiento-frm" class="form-label">País de nacimiento</label>
+        <select class="form-select" id="pais-nacimiento-frm" name="countryOfBirth" required aria-describedby="countryOfBirthFeedback" [ngModel]="user.countryOfBirth" required #countryOfBirth="ngModel" [class.is-invalid]="countryOfBirth.invalid && countryOfBirth.touched"
+            [disabled]="paises.length === 0">
+            <option *ngFor="let pais of paises" [value]="pais.code">{{ pais.name }}</option>
+        </select>
+        <div id="countryOfBirthFeedback" class="invalid-feedback">
+            Por favor indiquenos el país donde usted nació
+        </div>
+    </div>
     <div class="d-grid gap-2">
         <button type="submit" class="btn btn-outline-primary btn-block">Guardar</button>
     </div>
