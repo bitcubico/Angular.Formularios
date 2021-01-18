@@ -32,24 +32,26 @@ export class ReactiveComponent implements OnInit {
   }
 
   buildForm() {
-    this.form = this.fb.group({
-      name: ['', [ Validators.required, Validators.minLength(3)] ],
-      lastName: ['',[ Validators.required, Validators.minLength(3)] ],
-      email: ['', [ Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')] ],
-      sex: ['', Validators.required],
-      countryOfBirth: ['', Validators.required],
-      direction: this.fb.group({
-        address: ['', [Validators.required, Validators.minLength(3)]],
-        city: ['', [Validators.required, Validators.minLength(3)]]
-      }),
-      username: ['',[ Validators.required, Validators.minLength(3), this._validator.userValidator] ],
-      password: ['',[ Validators.required, Validators.minLength(3)] ],
-      passwordConfirm: ['', Validators.required ],
-      hobby: [''],
-      hobbies: this.fb.array([])
-    }, {
-      validators: this._validator.confirmPassword('password', 'passwordConfirm')
-    });
+    this.form = this.fb.group(
+      {
+        name: this.fb.control('', [ Validators.required, Validators.minLength(3)])
+        , lastName: this.fb.control('',  [Validators.required, Validators.minLength(3)] )
+        , email: this.fb.control('', [ Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')] )
+        , sex: this.fb.control('', Validators.required)
+        , countryOfBirth: this.fb.control('', Validators.required)
+        , direction: this.fb.group({
+          address: this.fb.control('', [Validators.required, Validators.minLength(3)])
+          , city: this.fb.control('', [Validators.required, Validators.minLength(3)])
+        })
+        , username: this.fb.control('', [ Validators.required, Validators.minLength(3), this._validator.userValidator] )
+        , usernameAsincrono: this.fb.control('', [ Validators.required, Validators.minLength(3) ] , this._validator.userValidatorAsync )
+        , password: this.fb.control('', [ Validators.required, Validators.minLength(3)] )
+        , passwordConfirm: this.fb.control('',  [Validators.required] )
+        , hobby: this.fb.control('')
+        , hobbies: this.fb.array([])
+      } 
+      , { validators: this._validator.confirmPassword('password', 'passwordConfirm') }
+    );
   }
 
   guardar(){
@@ -89,16 +91,17 @@ export class ReactiveComponent implements OnInit {
     
     // Nota IMPORTANTE: Si se desea llenar el formulario completo, usar this.form.setValue, de lo contrario reset
     this.form.reset({
-      name: 'Mauricio',
-      lastName: 'Montoya Medrano',
-      email: 'mauricio.montoya@bitcubico.com',
-      sex: 'M',
-      countryOfBirth: 'COL',
-      direction: {
-        address: 'Calle 42 #63B-34 apt. 201, Barrio Conquistadores',
-        city: 'Medellín'
-      },
-      username: 'mcubico'
+      name: 'Mauricio'
+      , lastName: 'Montoya Medrano'
+      , email: 'mauricio.montoya@bitcubico.com'
+      , sex: 'M'
+      , countryOfBirth: 'COL'
+      , direction: {
+        address: 'Calle 42 #63B-34 apt. 201, Barrio Conquistadores'
+        , city: 'Medellín'
+      }
+      , username: 'mcubico'
+      , usernameAsincrono: 'mcubico'
     });
 
     this.hobbies.clear();

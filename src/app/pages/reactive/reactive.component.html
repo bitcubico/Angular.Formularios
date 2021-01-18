@@ -1,6 +1,7 @@
 <h4>Tipo: <small>Reactivo</small></h4>
 <hr>
 <form [formGroup]="form" (ngSubmit)="guardar()" (keydown.enter)="notSubmit()" autocomplete="off">
+    <!-- NOMBRES -->
     <div class="mb-3">
         <label for="name-frm" class="form-label">Nombres</label>
         <input type="text" class="form-control" id="name-frm" formControlName="name" aria-describedby="nameFeedback" [class.is-invalid]="formValidation('name')">
@@ -8,6 +9,8 @@
             Este campo es requerido y debe contar con mínimo 3 caracteres
         </div>
     </div>
+
+    <!-- APELLIDOS -->
     <div class="mb-3">
         <label for="lastName-frm" class="form-label">Apellidos</label>
         <input type="text" class="form-control" id="lastName-frm" formControlName="lastName" aria-describedby="lastNameFeedback" [class.is-invalid]="formValidation('lastName')">
@@ -15,6 +18,8 @@
             Este campo es requerido y debe contar con mínimo 3 caracteres
         </div>
     </div>
+
+    <!-- CORREO -->
     <div class="mb-3">
         <label for="email-frm" class="form-label">Correo</label>
         <input type="email" class="form-control" formControlName="email" id="email-frm" aria-describedby="emailFeedback" [class.is-invalid]="formValidation('email')">
@@ -23,6 +28,8 @@
             La estructura del correo electrónico es incorrecta
         </div>
     </div>
+
+    <!-- PAÍS DE NACIMIENTO -->
     <div class="mb-3">
         <label for="pais-nacimiento-frm" class="form-label">País de nacimiento</label>
         <select class="form-select" id="pais-nacimiento-frm" formControlName="countryOfBirth" aria-describedby="countryOfBirthFeedback" [class.is-invalid]="formValidation('countryOfBirth')">
@@ -32,6 +39,8 @@
             Por favor indiquenos el país donde usted nació
         </div>
     </div>
+
+    <!-- GÉNERO -->
     <div class="mb-3">
         <label class="form-label">Género</label>
         <div class="form-check">
@@ -48,6 +57,8 @@
             <div class="invalid-feedback">Por favor seleccione el genero al cual usted pertenece</div>
         </div>
     </div>
+
+    <!-- DIRECCIÓN -->
     <div class="row g-2 mb-3" formGroupName="direction">
         <div class="col-md-8">
             <label for="address-frm" class="form-label">Dirección</label>
@@ -64,8 +75,11 @@
             </div>
         </div>
     </div>
+
+    <!-- USUARIO Y CLAVEM -->
     <div class="row g-2 mb-3">
-        <div class="col-md-4">
+        <!-- USUARIO -->
+        <div class="col-md-3">
             <label for="username-frm" class="form-label">Usuario</label>
             <input type="text" class="form-control" id="username-frm" formControlName="username" aria-describedby="usernameFeedback" [class.is-invalid]="formValidation('username')">
             <div *ngIf="form.get('username').errors?.required" id="usernameFeedback" class="invalid-feedback">
@@ -78,7 +92,24 @@
                 Este usuario ya esta asignado a otro, por favor seleccione otro
             </div>
         </div>
-        <div class="col-md-4">
+
+        <!-- USUARIO ASINCRONO -->
+        <div class="col-md-3">
+            <label for="username-asincrono-frm" class="form-label">Usuario Asincrono</label>
+            <input type="text" class="form-control" id="username-asincrono-frm" formControlName="usernameAsincrono" aria-describedby="usernameAsincronoFeedback" [class.is-invalid]="formValidation('usernameAsincrono')">
+            <div *ngIf="form.get('usernameAsincrono').errors?.required" id="usernameAsincronoFeedback" class="invalid-feedback">
+                Este campo es requerido
+            </div>
+            <div *ngIf="form.get('usernameAsincrono').errors?.minlength" id="usernameAsincronoFeedback" class="invalid-feedback">
+                Este campo debe contar con mínimo {{ form.get('username').errors?.minlength.requiredLength }} caracteres
+            </div>
+            <div *ngIf="form.get('usernameAsincrono').errors?.userExist" id="usernameAsincronoFeedback" class="invalid-feedback">
+                Este usuario ya esta asignado a otro, por favor seleccione otro
+            </div>
+        </div>
+
+        <!-- CLAVE -->
+        <div class="col-md-3">
             <label for="password-frm" class="form-label">Contraseña</label>
             <input type="password" class="form-control" id="password-frm" formControlName="password" aria-describedby="passwordFeedback" [class.is-invalid]="formValidation('password')">
             <div *ngIf="form.get('password').errors?.required" id="passwordFeedback" class="invalid-feedback">
@@ -88,7 +119,9 @@
                 Este campo debe contar con mínimo {{ form.get('password').errors?.minlength.requiredLength }} caracteres
             </div>
         </div>
-        <div class="col-md-4">
+
+        <!-- CONFIRMACION CLAVE -->
+        <div class="col-md-3">
             <label for="password-confirm-frm" class="form-label">Confirmar Contraseña</label>
             <input type="password" class="form-control" id="password-confirm-frm" formControlName="passwordConfirm" aria-describedby="passwordConfirmFeedback" [class.is-invalid]="formValidation('passwordConfirm')">
             <div *ngIf="form.get('passwordConfirm').errors?.required" id="passwordConfirmFeedback" class="invalid-feedback">
@@ -101,6 +134,8 @@
     </div>
 
     <hr>
+
+    <!-- PASATIEMPOS CONTROLES -->
     <div class="row mb-3 g-3">
         <div class="col-auto">
             <label for="hobby-frm" class="visually-hidden">Pasatiempo</label>
@@ -110,20 +145,13 @@
             <button type="button" (click)="agregarHobby()" class="btn btn-outline-primary">Agregar</button>
         </div>
     </div>
+
+    <!-- PASATIEMPOS CONTAINER -->
     <div id="pasatiempos-container" class="mb-3 p-2 border rounded" formArrayName="hobbies">
-        <!-- <button type="button" class="badge bg-dark m-1" *ngFor="let hobby of hobbies.controls; let i = index">
-            {{hobby.value}} <input type="button" [formControlName]="i" (click)="borrarHobby(i)" class="badge bg-secondary" value="X" />
-        </button> -->
-        <!-- <span *ngFor="let hobby of hobbies.controls; let i = index" class="badge bg-dark m-1">
-            {{hobby.value}}
-            <button type="button" [formControlName]="i" (click)="borrarHobby(i)" class="badge bg-secondary" style="cursor: pointer;">X</button>
-        </span> -->
-        <input type="button" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top" appDeleteButton class="btn btn-sm btn-outline-primary m-1" [formControlName]="i" (click)="borrarHobby(i)" *ngFor="let hobby of hobbies.controls; let i = index">
-        <!-- <div class="input-group mb-3" *ngFor="let hobby of hobbies.controls; let i = index">
-            <input type="text" class="form-control" [value]="hobby.value">
-            <input type="button" class="btn btn-outline-secondary" [formControlName]="i" (click)="borrarHobby(i)" value="Del">
-        </div> -->
+        <input type="button" appDeleteButton class="btn btn-sm btn-outline-primary m-1" [formControlName]="i" (click)="borrarHobby(i)" *ngFor="let hobby of hobbies.controls; let i = index">
     </div>
+
+    <!-- BOTONES -->
     <div class="d-grid gap-2 ">
         <button type="submit" class="btn btn-outline-primary btn-block ">Guardar</button>
         <button type="button" (click)="fillForm()" class="btn btn-outline-secondary btn-block ">Cargar Datos</button>
