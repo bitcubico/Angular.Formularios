@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PaisesService } from 'src/app/services/paises.service';
+import { ValidatorsService } from '../../services/validators.service';
 
 @Component({
   selector: 'app-reactive',
@@ -10,7 +11,7 @@ export class ReactiveComponent implements OnInit {
   paises: Pais[];
   form: FormGroup;
 
-  constructor(private _paisesService: PaisesService, private fb: FormBuilder) { 
+  constructor(private _paisesService: PaisesService, private fb: FormBuilder, private _validator: ValidatorsService) { 
     this.buildForm();
   }
 
@@ -41,6 +42,9 @@ export class ReactiveComponent implements OnInit {
         address: ['', [Validators.required, Validators.minLength(3)]],
         city: ['', [Validators.required, Validators.minLength(3)]]
       }),
+      username: ['',[ Validators.required, Validators.minLength(3), this._validator.userValidator] ],
+      password: ['',[ Validators.required, Validators.minLength(3)] ],
+      passwordConfirm: ['', Validators.required ],
       hobby: [''],
       hobbies: this.fb.array([])
     });
@@ -54,8 +58,8 @@ export class ReactiveComponent implements OnInit {
         control.markAllAsTouched();
       });
     }
-
-    this.form.reset();
+    else
+      this.form.reset();
   }
 
   get hobbies() {
@@ -66,7 +70,7 @@ export class ReactiveComponent implements OnInit {
     console.log('Agregando hobby');
     console.log(this.form.get('hobby'));
     let value: string = this.form.get('hobby').value;
-    if(value == null || value.length === 0)
+    if(value?.length === 0)
       return;
     
     this.hobbies.push(this.fb.control([value]));
@@ -91,7 +95,8 @@ export class ReactiveComponent implements OnInit {
       direction: {
         address: 'Calle 42 #63B-34 apt. 201, Barrio Conquistadores',
         city: 'Medellín'
-      }
+      },
+      username: 'mcubico'
     });
 
     this.hobbies.clear();
