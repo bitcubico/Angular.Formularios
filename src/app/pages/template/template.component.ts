@@ -42,9 +42,9 @@ export class TemplateComponent implements OnInit {
       Object.values(data.controls).forEach(control => {
         control.markAllAsTouched();
       })
-    }
-
-    console.log(data.value);
+    } 
+    else
+      data.reset();
   }
 }
 
