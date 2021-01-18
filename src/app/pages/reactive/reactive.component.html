@@ -81,15 +81,21 @@
         <div class="col-md-4">
             <label for="password-frm" class="form-label">Contraseña</label>
             <input type="password" class="form-control" id="password-frm" formControlName="password" aria-describedby="passwordFeedback" [class.is-invalid]="formValidation('password')">
-            <div id="passwordFeedback" class="invalid-feedback">
-                Este campo es requerido y debe contar con mínimo 3 caracteres
+            <div *ngIf="form.get('password').errors?.required" id="passwordFeedback" class="invalid-feedback">
+                Este campo es requerido
+            </div>
+            <div *ngIf="form.get('password').errors?.minlength" id="passwordFeedback" class="invalid-feedback">
+                Este campo debe contar con mínimo {{ form.get('password').errors?.minlength.requiredLength }} caracteres
             </div>
         </div>
         <div class="col-md-4">
             <label for="password-confirm-frm" class="form-label">Confirmar Contraseña</label>
-            <input type="password-confirm" class="form-control" id="password-confirm-frm" formControlName="passwordConfirm" aria-describedby="passwordConfirmFeedback" [class.is-invalid]="formValidation('passwordConfirm')">
-            <div id="passwordConfirmFeedback" class="invalid-feedback">
+            <input type="password" class="form-control" id="password-confirm-frm" formControlName="passwordConfirm" aria-describedby="passwordConfirmFeedback" [class.is-invalid]="formValidation('passwordConfirm')">
+            <div *ngIf="form.get('passwordConfirm').errors?.required" id="passwordConfirmFeedback" class="invalid-feedback">
                 Este campo es requerido
+            </div>
+            <div *ngIf="form.get('passwordConfirm').errors?.confirmPasswordInvalid" id="passwordConfirmFeedback" class="invalid-feedback">
+                Las contraseñas proporcionadas no coinciden
             </div>
         </div>
     </div>

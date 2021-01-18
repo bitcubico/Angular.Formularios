@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -13,5 +13,17 @@ export class ValidatorsService {
       return { userExist: true }
 
     return null;
+  }
+
+  confirmPassword(passName: string, confirmPassName: string) {
+    return (fg: FormGroup) => {
+      const passControl = fg.controls[passName];
+      const confirmControl = fg.controls[confirmPassName];
+
+      if( passControl.value === confirmControl.value) 
+        confirmControl.setErrors(null);
+      else 
+        confirmControl.setErrors({ confirmPasswordInvalid: true })
+    }
   }
 }

@@ -47,6 +47,8 @@ export class ReactiveComponent implements OnInit {
       passwordConfirm: ['', Validators.required ],
       hobby: [''],
       hobbies: this.fb.array([])
+    }, {
+      validators: this._validator.confirmPassword('password', 'passwordConfirm')
     });
   }
 
