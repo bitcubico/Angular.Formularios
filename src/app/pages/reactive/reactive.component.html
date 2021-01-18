@@ -1,6 +1,6 @@
 <h4>Tipo: <small>Reactivo</small></h4>
 <hr>
-<form [formGroup]="form" (ngSubmit)="guardar()" autocomplete="off">
+<form [formGroup]="form" (ngSubmit)="guardar()" (keydown.enter)="notSubmit()" autocomplete="off">
     <div class="mb-3">
         <label for="name-frm" class="form-label">Nombres</label>
         <input type="text" class="form-control" id="name-frm" formControlName="name" aria-describedby="nameFeedback" [class.is-invalid]="formValidation('name')">
@@ -63,6 +63,30 @@
                 Este campo es requerido y debe contar con mínimo 3 caracteres
             </div>
         </div>
+    </div>
+    <hr>
+    <div class="row mb-3 g-3">
+        <div class="col-auto">
+            <label for="hobby-frm" class="visually-hidden">Pasatiempo</label>
+            <input type="text" (keyup.enter)="agregarHobby()" class="form-control" id="hobby-frm" formControlName="hobby" placeholder="Pasatiempo">
+        </div>
+        <div class="col-auto">
+            <button type="button" (click)="agregarHobby()" class="btn btn-outline-primary">Agregar</button>
+        </div>
+    </div>
+    <div id="pasatiempos-container" class="mb-3 p-2 border rounded" formArrayName="hobbies">
+        <!-- <button type="button" class="badge bg-dark m-1" *ngFor="let hobby of hobbies.controls; let i = index">
+            {{hobby.value}} <input type="button" [formControlName]="i" (click)="borrarHobby(i)" class="badge bg-secondary" value="X" />
+        </button> -->
+        <!-- <span *ngFor="let hobby of hobbies.controls; let i = index" class="badge bg-dark m-1">
+            {{hobby.value}}
+            <button type="button" [formControlName]="i" (click)="borrarHobby(i)" class="badge bg-secondary" style="cursor: pointer;">X</button>
+        </span> -->
+        <input type="button" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top" appDeleteButton class="btn btn-sm btn-outline-primary m-1" [formControlName]="i" (click)="borrarHobby(i)" *ngFor="let hobby of hobbies.controls; let i = index">
+        <!-- <div class="input-group mb-3" *ngFor="let hobby of hobbies.controls; let i = index">
+            <input type="text" class="form-control" [value]="hobby.value">
+            <input type="button" class="btn btn-outline-secondary" [formControlName]="i" (click)="borrarHobby(i)" value="Del">
+        </div> -->
     </div>
     <div class="d-grid gap-2 ">
         <button type="submit" class="btn btn-outline-primary btn-block ">Guardar</button>

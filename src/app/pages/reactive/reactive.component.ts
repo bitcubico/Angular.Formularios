@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PaisesService } from 'src/app/services/paises.service';
 
 @Component({
@@ -40,11 +40,14 @@ export class ReactiveComponent implements OnInit {
       direction: this.fb.group({
         address: ['', [Validators.required, Validators.minLength(3)]],
         city: ['', [Validators.required, Validators.minLength(3)]]
-      })
+      }),
+      hobby: [''],
+      hobbies: this.fb.array([])
     });
   }
 
   guardar(){
+    console.log('SUBMIT');
     console.log(this.form);
     if(this.form.invalid) {
       Object.values(this.form.controls).forEach(control => {
@@ -55,9 +58,31 @@ export class ReactiveComponent implements OnInit {
     this.form.reset();
   }
 
+  get hobbies() {
+    return this.form.get('hobbies') as FormArray;
+  }
+
+  agregarHobby() {
+    console.log('Agregando hobby');
+    console.log(this.form.get('hobby'));
+    let value: string = this.form.get('hobby').value;
+    if(value == null || value.length === 0)
+      return;
+    
+    this.hobbies.push(this.fb.control([value]));
+    // Limpio el campo de texto donde se agrega el hobby
+    this.form.get('hobby').reset();
+  }
+
+  borrarHobby(i: number) {
+    this.hobbies.removeAt(i);
+  }
+
   fillForm() {
     console.log('Cargando...');
-    this.form.setValue({
+    
+    // Nota IMPORTANTE: Si se desea llenar el formulario completo, usar this.form.setValue, de lo contrario reset
+    this.form.reset({
       name: 'Mauricio',
       lastName: 'Montoya Medrano',
       email: 'mauricio.montoya@bitcubico.com',
@@ -68,10 +93,18 @@ export class ReactiveComponent implements OnInit {
         city: 'Medellín'
       }
     });
+
+    this.hobbies.clear();
+    const hobbiesAux = [['Fútbol'], ['Leer'], ['Caminar'], ['Viajar'], ['Meditar'], ['Juegos de mesa']];
+    hobbiesAux.forEach(value => this.hobbies.push(this.fb.control(value)));
   }
 
   formValidation(controlName: string) {
     return this.form.get(controlName).invalid && this.form.get(controlName).touched;
+  }
+
+  notSubmit() {
+    return false;
   }
 
 }

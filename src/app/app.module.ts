@@ -9,6 +9,7 @@ import { HomeComponent } from './components/home/home.component';
 import { NavbarComponent } from './components/shared/navbar/navbar.component';
 import { ReactiveComponent } from './pages/reactive/reactive.component';
 import { TemplateComponent } from './pages/template/template.component';
+import { DeleteButtonDirective } from './directives/delete-button.directive';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { TemplateComponent } from './pages/template/template.component';
     HomeComponent,
     NavbarComponent,
     ReactiveComponent,
-    TemplateComponent
+    TemplateComponent,
+    DeleteButtonDirective
   ],
   imports: [
     BrowserModule,
